@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObsFrame : MonoBehaviour {
     //universal
     public int ObsId;//jenis Obstacle
-    public int Life, TimeWatch;
+    public int Life;
+    public float Speed,EndWalk;
     //Obstacle 0
 
     //Obstacle 1
@@ -20,12 +21,12 @@ public class ObsFrame : MonoBehaviour {
         {
             case 0:
                 Life = 100;
-                TimeWatch = 250;
+                Speed = -3;
                 break;
             case 1:
                 Life = 100;
-                TimeWatch = 500;
                 JumpBoong(0.3, 0);
+                Speed = -1;
                 break;
         }
         
@@ -42,14 +43,14 @@ public class ObsFrame : MonoBehaviour {
         if (col.gameObject.tag == "Magic")
         {
             int pow = col.gameObject.GetComponent<MagicFrame>().pow;
-            Debug.Log(pow);
-            Life -= 50 * pow;
-            col.gameObject.GetComponent<MagicFrame>().pow -= 1;
-            switch (ObsId)
+            switch (col.gameObject.GetComponent<MagicFrame>().MagId)
             {
-                case 0:
+                case 2:
+                    Speed += 0.5f;
                     break;
-                case 1:
+                default:
+                    Life -= 50 * pow;
+                    col.gameObject.GetComponent<MagicFrame>().pow -= 1;
                     break;
             }
         }
@@ -70,14 +71,13 @@ public class ObsFrame : MonoBehaviour {
     {
         if (Time.timeScale != 0f)
         {
-            TimeWatch -= 1;
-            if (TimeWatch == 0)
-            {
-                Destroy(gameObject);
-            }
             if (Life <= 0)
             {
                 Destroy(this.gameObject);
+            }
+            if(transform.position.x < EndWalk)
+            {
+                Destroy(gameObject);
             }
         }
         switch (ObsId)
@@ -85,13 +85,13 @@ public class ObsFrame : MonoBehaviour {
             case 0:
                 if (Time.timeScale != 0f)
                 {
-                    transform.Translate(new Vector3(-5 * Time.deltaTime, 0, 0));
+                    transform.Translate(new Vector3(Speed * Time.deltaTime, 0, 0));
                 }
                 break;
             case 1:
                 if (Time.timeScale != 0f)
                 {
-                    Vector3 newVec = transform.position + new Vector3(-2 * Time.deltaTime, 0, 0);
+                    Vector3 newVec = transform.position + new Vector3(Speed * Time.deltaTime, 0, 0);
                     if (JumPhase)//jump boongan
                     {
                         newVec.y += (float)(velJump);

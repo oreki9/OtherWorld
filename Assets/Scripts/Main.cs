@@ -25,7 +25,8 @@ public class Main : MonoBehaviour
             {
                 int InsRndm = Random.Range(0, ObstacleList.Count);
                 Vector3 NewObsPos = new Vector3(CameraVec.x + transform.position.x, -2f, 0);
-                Instantiate(ObstacleList[InsRndm], NewObsPos, Quaternion.identity);
+                GameObject Obstacle = Instantiate(ObstacleList[InsRndm], NewObsPos, Quaternion.identity);
+                Obstacle.GetComponent<ObsFrame>().EndWalk = -(CameraVec.x + transform.position.x+1f);
                 TimeInst = 50+(Random.Range(0,10)*10);
             }
         }

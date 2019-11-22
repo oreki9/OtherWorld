@@ -16,10 +16,13 @@ public class Magic : MonoBehaviour
         switch (MgcId)
         {
             case 0:
-                MgcoolEnd = 100;
+                MgcoolEnd = 50;
                 break;
             case 1:
                 MgcoolEnd = 100;
+                break;
+            case 2:
+                MgcoolEnd = 150;
                 break;
             default:
                 MgcoolEnd = 100;
