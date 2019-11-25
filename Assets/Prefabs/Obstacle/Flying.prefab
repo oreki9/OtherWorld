@@ -103,6 +103,8 @@ MonoBehaviour:
   Life: 0
   Speed: 0
   EndWalk: 0
+  playerGO: {fileID: 0}
+  Bomb: {fileID: 1113642899550044, guid: 2de6cd821d08728449e6283d0b8fcb80, type: 2}
 --- !u!212 &212071027301206912
 SpriteRenderer:
   m_ObjectHideFlags: 1

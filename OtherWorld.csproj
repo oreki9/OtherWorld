@@ -253,6 +253,7 @@
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\MountainBG.cs" />
     <Compile Include="Assets\Scripts\ObsFrame.cs" />
+    <Compile Include="Assets\Scripts\OtherBomb\Bomb.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Anima2D\Licenses.txt" />

@@ -7,6 +7,8 @@ public class ObsFrame : MonoBehaviour {
     public int ObsId;//jenis Obstacle
     public int Life;
     public float Speed,EndWalk;
+    public GameObject playerGO;
+    public GameObject Bomb;
     //Obstacle 0
 
     //Obstacle 1
@@ -14,6 +16,8 @@ public class ObsFrame : MonoBehaviour {
     float startY;
     bool JumPhase;
 
+    //Obstacle 2
+    bool Fly;
 
     void Start()
     {
@@ -31,6 +35,7 @@ public class ObsFrame : MonoBehaviour {
             case 2://flying
                 Life = 100;
                 Speed = -3;
+                Fly = true;
                 break;
         }
         
@@ -67,7 +72,6 @@ public class ObsFrame : MonoBehaviour {
                 case 1:
                     break;
                 case 2:
-                    
                     break;
             }
         }
@@ -118,7 +122,17 @@ public class ObsFrame : MonoBehaviour {
             case 2:
                 if(Time.timeScale != 0f)
                 {
-                    transform.position = transform.position + new Vector3(Speed * Time.deltaTime, 0, 0);
+                    Vector3 newPos = (transform.position + new Vector3(Speed * Time.deltaTime, 0, 0));
+                    if (Fly)
+                    {
+                        if (newPos.x < playerGO.transform.position.x)
+                        {
+                            newPos.x = playerGO.transform.position.x;
+                            Instantiate(Bomb, transform.position, Quaternion.identity);
+                            Fly = false;
+                        }
+                    }
+                    transform.position = newPos;
                 }
                 break;
         }

@@ -8,7 +8,9 @@ public class Main : MonoBehaviour
     int TimeInst = 0;
     public Vector3 CameraVec;
     public List<GameObject> ObstacleList = new List<GameObject>();
+    public List<GameObject> ObstacleInArea = new List<GameObject>();
     public List<GameObject> MgcList = new List<GameObject>();
+    public GameObject playerGO;
     void Start()
     {
         TimeInst = 100;
@@ -30,7 +32,10 @@ public class Main : MonoBehaviour
                     NewObsPos.y += 1.5f;
                 }
                 GameObject Obstacle = Instantiate(ObstacleList[InsRndm], NewObsPos, Quaternion.identity);
-                Obstacle.GetComponent<ObsFrame>().EndWalk = -(CameraVec.x + transform.position.x+1f);
+                ObstacleInArea.Add(Obstacle);
+                ObsFrame ObsScript = Obstacle.GetComponent<ObsFrame>();
+                ObsScript.EndWalk = -(CameraVec.x + transform.position.x+1f);
+                ObsScript.playerGO = playerGO;
                 TimeInst = 50+(Random.Range(0,10)*10);
             }
         }
