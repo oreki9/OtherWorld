@@ -19,14 +19,18 @@ public class ObsFrame : MonoBehaviour {
     {
         switch (ObsId)
         {
-            case 0:
+            case 0://walker
                 Life = 100;
                 Speed = -3;
                 break;
-            case 1:
+            case 1://jumper
                 Life = 100;
                 JumpBoong(0.3, 0);
                 Speed = -1;
+                break;
+            case 2://flying
+                Life = 100;
+                Speed = -3;
                 break;
         }
         
@@ -46,7 +50,7 @@ public class ObsFrame : MonoBehaviour {
             switch (col.gameObject.GetComponent<MagicFrame>().MagId)
             {
                 case 2:
-                    Speed += 0.5f;
+                    Speed = Speed/ 2;
                     break;
                 default:
                     Life -= 50 * pow;
@@ -61,6 +65,8 @@ public class ObsFrame : MonoBehaviour {
                 case 0:
                     break;
                 case 1:
+                    break;
+                case 2:
                     
                     break;
             }
@@ -107,6 +113,12 @@ public class ObsFrame : MonoBehaviour {
                     {
                         JumpBoong(0.3, 0);
                     }
+                }
+                break;
+            case 2:
+                if(Time.timeScale != 0f)
+                {
+                    transform.position = transform.position + new Vector3(Speed * Time.deltaTime, 0, 0);
                 }
                 break;
         }

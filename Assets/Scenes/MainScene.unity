@@ -163,7 +163,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: 988877353701cbe4ca84548237203298, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -306,6 +306,7 @@ MonoBehaviour:
   ObstacleList:
   - {fileID: 1980517582958054, guid: 4e874c52b082ae6448f9d3c79926779b, type: 2}
   - {fileID: 1829907736764320, guid: 0f04acf9d210f344996f8dbfe86861ad, type: 2}
+  - {fileID: 1792353082696722, guid: 59424a0e3c5788f409fffc5c3fee4146, type: 2}
   MgcList:
   - {fileID: 1319070208441166, guid: 055a37bdb50ca9743b31452e75a98141, type: 2}
   - {fileID: 1611713401347352, guid: 7b1f3004cac0b0648b32ce2758c2c380, type: 2}
@@ -619,7 +620,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: 988877353701cbe4ca84548237203298, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
