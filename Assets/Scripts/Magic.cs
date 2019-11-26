@@ -23,6 +23,7 @@ public class Magic : MonoBehaviour
     void Start()
     {
         TextBtn = transform.Find("TextBtn").gameObject.GetComponent<Text>();
+        PlayerObj = mainScr.playerGO;
         switch (MgcId)
         {
             case 0://Shoot
