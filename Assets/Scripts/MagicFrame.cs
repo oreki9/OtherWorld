@@ -6,13 +6,13 @@ public class MagicFrame : MonoBehaviour {
     
     public int pow, MagId,TimeLast;
     public GameObject player;
+    public float speed;
     //MagId 1
     int time = 100;
-
-
+    
     //Magid 3
     public GameObject TargetPos;
-    public float speed;
+    
     void Start()
     {
         switch (MagId)
@@ -20,6 +20,7 @@ public class MagicFrame : MonoBehaviour {
             case 0://bullet
                 TimeLast = 200;
                 pow = 2;
+                speed = 10;
                 break;
             case 1://burst
                 pow = 4;
@@ -32,11 +33,23 @@ public class MagicFrame : MonoBehaviour {
             case 3://hooming
                 pow = 1;
                 TimeLast = 100;
-                speed = 3;
+                speed = 2.5f;
                 break;
-            case 4:
+            case 4://Messiah
                 pow = 100;
                 TimeLast = 10;
+                break;
+            case 5://At-Field
+                pow = 8;
+                TimeLast = 400;
+                break;
+            case 6://Rain
+                pow = 1;
+                TimeLast = 100;
+                speed = 5;
+                break;
+            case 7://Fly
+                TimeLast = 150;
                 break;
             default:
                 TimeLast = 100;
@@ -62,6 +75,14 @@ public class MagicFrame : MonoBehaviour {
         if (Time.timeScale != 0)
         {
             TimeLast -= 1;
+            /*switch (MagId)
+            {
+                case 5:
+                    break;
+                default:
+                    
+                    break;
+            }*/
             if (TimeLast <= 0)
             {
                 Destroy(gameObject);
@@ -73,25 +94,23 @@ public class MagicFrame : MonoBehaviour {
             switch (MagId)
             {
                 case 0:
-                    if (Time.timeScale != 0f)
-                    {
-                        transform.Translate(new Vector3(6f * Time.deltaTime, 0, 0));
-                    }
+                    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
                     break;
                 case 1:
-                    if (Time.timeScale != 0f)
+                    time--;
+                    if (time >= time * 8 / 10)
                     {
-                        time--;
-                        if (time >= time * 7 / 10)
+                        if (player.transform.position != null)
                         {
-                            transform.localScale += new Vector3(1, 0.8f, 0) * Time.deltaTime;
-                            transform.Rotate(new Vector3(0, 0, 180) * Time.deltaTime);
+                            transform.position = player.transform.position;
                         }
-                        else
-                        {
-                            transform.Rotate(new Vector3(0, 0, 360) * Time.deltaTime);
-                            transform.position = transform.position + new Vector3(6f * Time.deltaTime, 0, 0);
-                        }
+                        transform.localScale += new Vector3(2, 1.5f, 0) * Time.deltaTime;
+                        transform.Rotate(new Vector3(0, 0, 250) * Time.deltaTime);
+                    }
+                    else
+                    {
+                        transform.Rotate(new Vector3(0, 0, 360) * Time.deltaTime);
+                        transform.position = transform.position + new Vector3(6f * Time.deltaTime, 0, 0);
                     }
                     break;
                 case 2:
@@ -105,7 +124,7 @@ public class MagicFrame : MonoBehaviour {
                     if (TargetPos != null)
                     {
                         float Vector = LookAt(newPos, TargetPos.transform.position);
-                        newPos = newPos + transform.right * ((float)speed / 10);
+                        newPos = newPos + transform.right * ((float)speed / 10) ;
                         transform.rotation = Quaternion.Euler(0, 0, Vector);
                     }
                     else
@@ -114,8 +133,10 @@ public class MagicFrame : MonoBehaviour {
                     }
                     transform.position = newPos;
                     break;
-                case 4:
-
+                case 6:
+                    Vector3 newpos = transform.position;
+                    newpos = newpos - transform.up * ((float)speed / 10);
+                    transform.position = newpos;
                     break;
             }
         }

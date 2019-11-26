@@ -66,14 +66,6 @@ public class ObsFrame : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             Time.timeScale = 0f;
-            switch (ObsId){
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-            }
         }
     }
     // Update is called once per frame
@@ -109,7 +101,7 @@ public class ObsFrame : MonoBehaviour {
                         TimeJump += 0.05;
                         if (newVec.y - 0.05 < startY)
                         {
-                            newVec.y -= newVec.y - startY;
+                            newVec.y -= (newVec.y - startY);
                         }
                     }
                     transform.position = (newVec);
