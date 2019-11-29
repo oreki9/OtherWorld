@@ -56,8 +56,8 @@ MonoBehaviour:
   MagId: 4
   TimeLast: 0
   player: {fileID: 0}
-  TargetPos: {fileID: 0}
   speed: 0
+  TargetPos: {fileID: 0}
 --- !u!212 &212236456318935160
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fdc0b7a3e3689814284c7a442a433831, type: 3}
   m_Color: {r: 0.5344828, g: 0, b: 0, a: 0.684}
   m_FlipX: 0
