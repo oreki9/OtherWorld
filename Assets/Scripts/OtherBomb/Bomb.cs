@@ -14,7 +14,7 @@ public class Bomb : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            Time.timeScale = 0f;
+            col.gameObject.GetComponent<PlayerScript>().MainSc.GameOver();
         }
     }
         // Update is called once per frame

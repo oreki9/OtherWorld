@@ -10,7 +10,7 @@ public class Magic : MonoBehaviour
     public Main mainScr;
     [HideInInspector]
     public GameObject PlayerObj;
-    int Mgcooldown;
+    public int Mgcooldown;
     int MgcoolEnd;
     Text TextBtn;//TextFor Name Magic
     bool NotActive = false;//active bool button
@@ -22,6 +22,12 @@ public class Magic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.GetComponent<Button>().interactable = false;
+    }
+    public void SetBtnMgcId(int i)
+    {
+        gameObject.GetComponent<Button>().interactable = true;
+        MgcId = i;
         TextBtn = transform.Find("TextBtn").gameObject.GetComponent<Text>();
         PlayerObj = mainScr.playerGO;
         switch (MgcId)
@@ -47,7 +53,7 @@ public class Magic : MonoBehaviour
                 TextBtn.text = "Mess";
                 break;
             case 5://At-Field
-                MgcoolEnd = 300;
+                MgcoolEnd = 200;
                 TextBtn.text = "AT";
                 break;
             case 6:
@@ -59,11 +65,9 @@ public class Magic : MonoBehaviour
                 TextBtn.text = "Fly";
                 break;
             default:
-                MgcoolEnd = 100;
                 break;
         }
         Mgcooldown = MgcoolEnd;
-
     }
     public void InstMagic()
     {
@@ -112,7 +116,7 @@ public class Magic : MonoBehaviour
                 if (ManyObj == 1)
                 {
                     magic = Instantiate(mainScr.MgcList[MgcId], PlayerVec, Quaternion.identity);
-                    if (MgcId == 1)
+                    if ((MgcId == 1)||(MgcId==5))
                     {
                         magic.GetComponent<MagicFrame>().player = PlayerObj;
                     }
@@ -220,18 +224,25 @@ public class Magic : MonoBehaviour
             }
             if ((MgcId == 5) && (!AtField))
             {
-                gameObject.GetComponent<Button>().interactable = true;//Nyala
+                if(Mgcooldown < MgcoolEnd)
+                {
+                    Mgcooldown += 1;
+                }
+                if (Mgcooldown == MgcoolEnd)
+                {
+                    gameObject.GetComponent<Button>().interactable = true;//Nyala
+                }
             }
             else if(MgcId==5)
             {
                 gameObject.GetComponent<Button>().interactable = false;//Mati
             }
-            if ((Mgcooldown < MgcoolEnd)&& (MgcId != 5))
+            if ((Mgcooldown < MgcoolEnd) && (MgcId != 5))
             {
                 Mgcooldown += 1;
                 gameObject.GetComponent<Button>().interactable = false;
             }
-            else if (MgcId != 5)
+            else if ((MgcId != 5) && (MgcId >= 0))
             {
                 gameObject.GetComponent<Button>().interactable = true;
                 if (MgcId == 7)

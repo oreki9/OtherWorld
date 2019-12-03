@@ -11,19 +11,156 @@ public class Main : MonoBehaviour
     public List<GameObject> ObstacleList = new List<GameObject>();
     public List<GameObject> ObstacleInArea = new List<GameObject>();
     public List<GameObject> MgcList = new List<GameObject>();
-
+    public List<GameObject> MagicBtnList = new List<GameObject>();
     public GameObject playerGO;
     public Vector3 PlayerStartPos;
-
+    ButtonSc MenuScene = new ButtonSc();
     public Text ScoreText;
-    public int Score = 0;
+    public int Score = 0;//score in screen
+
+    //Magic Select Panel
+    public int SelMagNow;
+    public Text SelMagText;//Text Name Magic
+    public List<int> MagIdSel;
+    int SelMagBtn = 0;
+    public GameObject MenuSelPanel;
+    string MgcSaveStr = "7 1 2 3 4 5 6";//list magic yang di dapat player
+
+    //Buy new Magic panel
+    public Text AllPointTxt;
+    public GameObject GetMagicPanel;
+    int GetMagicNow = 0;
+    public Text NameGetMag, GetMagPrice;
+    public List<int> MgcPossId;
+    public GameObject BtnBuyMgc;
     void Start()
     {
+        MenuSelPanel.SetActive(true);
+        MagIdSel = GetEveryMagicPossible();
+        SelMagNow = 0;
+        SelMagText.text = MgcList[MagIdSel[SelMagNow]].name;
+        Time.timeScale = 0f;
+        
+        for(int i = 0; i < MgcList.Count; i++)
+        {
+            if(MagIdSel.IndexOf(i)<0)
+            {
+                MgcPossId.Add(i);
+            }
+        }
+
         TimeInst = 100;
         CameraVec = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         PlayerStartPos = playerGO.transform.position;
     }
-
+    public List<int> GetEveryMagicPossible()
+    {
+        List<int> HasilInt = new List<int>();
+        string MagicListGet = PlayerPrefs.GetString("Magic", "0");
+        MgcSaveStr = MagicListGet;
+        char[] spearator = { ' ' };
+        System.String[] MagIdSelStr = MgcSaveStr.Split(spearator, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < MagIdSelStr.Length; i++)
+        {
+            int outInt = System.Int32.Parse(MagIdSelStr[i]);
+            HasilInt.Add(outInt);
+        }
+        return HasilInt;
+    }
+    public void BuyMag()
+    {
+        string MagicListGet = PlayerPrefs.GetString("Magic", "0");
+        MagicListGet += " "+ MgcPossId[GetMagicNow].ToString();
+        Debug.Log(MagicListGet);
+        PlayerPrefs.SetString("Magic", MagicListGet);
+        int PointBuy = System.Int32.Parse((AllPointTxt.text));
+        PlayerPrefs.SetInt("Point", PointBuy - MagicPrice(MgcPossId[GetMagicNow]));
+        MenuScene.ToMenuScene();
+    }
+    public void GetMagNext()
+    {
+        if (GetMagicNow + 1 != MgcPossId.Count)
+        {
+            GetMagicNow += 1;
+        }
+        if (NameGetMag != null)
+        {
+            NameGetMag.text = MgcList[MgcPossId[GetMagicNow]].name;
+        }
+        if(GetMagPrice != null)
+        {
+            GetMagPrice.text = MagicPrice(MgcPossId[GetMagicNow]).ToString();
+        }
+        IsCanBuy();
+    }
+    public void GetMagPref()
+    {
+        if (GetMagicNow > 0)
+        {
+            GetMagicNow -= 1;
+        }
+        if (NameGetMag != null)
+        {
+            NameGetMag.text = MgcList[MgcPossId[GetMagicNow]].name;
+        }
+        if (GetMagPrice != null)
+        {
+            GetMagPrice.text = MagicPrice(MgcPossId[GetMagicNow]).ToString();
+        }
+        IsCanBuy();
+    }
+    public void SelMagNext()
+    {
+        if (SelMagNow + 1 != MagIdSel.Count)
+        {
+            SelMagNow += 1;
+        }
+        if (SelMagText!=null)
+        {
+            SelMagText.text = MgcList[MagIdSel[SelMagNow]].name;
+        }
+    }
+    public void SelMagPref()
+    {
+        if (SelMagNow > 0)
+        {
+            SelMagNow -= 1;
+        }
+        if (SelMagText != null)
+        {
+            SelMagText.text = MgcList[MagIdSel[SelMagNow]].name;
+        }
+    }
+    public void SelMag()
+    {
+        if (SelMagBtn + 1 <= MagicBtnList.Count)
+        {
+            MagicBtnList[SelMagBtn].GetComponent<Magic>().SetBtnMgcId(MagIdSel[SelMagNow]);
+            MagIdSel.RemoveAt(SelMagNow);
+            SelMagBtn +=1;
+            if (SelMagNow > 0)
+            {
+                SelMagNow -= 1;
+            }
+            if (MagIdSel.Count > 0)
+            {
+                SelMagText.text = MgcList[MagIdSel[SelMagNow]].name;
+            }
+            if (MagIdSel.Count == 0)
+            {
+                StartPlay();
+            }
+        }
+    }
+    public void ReplayScene()
+    {
+        MenuScene.ToPlayScene();
+    }
+    public void StartPlay()
+    {
+        Time.timeScale = 1f;
+        MenuSelPanel.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -47,6 +184,65 @@ public class Main : MonoBehaviour
                 ObsScript.playerGO = playerGO;
                 TimeInst = 50+(Random.Range(0,10)*10);
             }
+        }
+    }
+    public int MagicPrice(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return 10;
+            case 1:
+                return 15;
+            case 2:
+                return 15;
+            case 3:
+                return 15;
+            case 4:
+                return 25;
+            case 5:
+                return 20;
+            case 6:
+                return 25;
+            case 7:
+                return 10;
+            default:
+                return 10;
+        }
+    }
+    void IsCanBuy()
+    {
+        int PointBuy = PlayerPrefs.GetInt("Point", 0);
+        if ((PointBuy - MagicPrice(MgcPossId[GetMagicNow])) >= 0)
+        {
+            BtnBuyMgc.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            BtnBuyMgc.GetComponent<Button>().interactable = false;
+        }
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        int GetPoint = PlayerPrefs.GetInt("Point", 0);
+        GetPoint = System.Int32.Parse((ScoreText.text)) + GetPoint;
+        PlayerPrefs.SetInt("Point", GetPoint);
+        GetMagicPanel.SetActive(true);
+        if (NameGetMag != null)
+        {
+            NameGetMag.text = MgcList[MgcPossId[0]].name;
+        }
+        if (GetMagPrice != null)
+        {
+            GetMagPrice.text = MagicPrice(MgcPossId[0]).ToString();
+        }
+        IsCanBuy();
+        int HighestScore = PlayerPrefs.GetInt("Score", 0);
+        AllPointTxt.text = GetPoint.ToString();
+        if (Score > HighestScore)
+        {
+            PlayerPrefs.SetInt("Score", Score);
         }
     }
 }

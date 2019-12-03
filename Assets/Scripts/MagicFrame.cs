@@ -12,7 +12,6 @@ public class MagicFrame : MonoBehaviour {
     
     //Magid 3
     public GameObject TargetPos;
-    
     void Start()
     {
         switch (MagId)
@@ -100,7 +99,7 @@ public class MagicFrame : MonoBehaviour {
                     time--;
                     if (time >= time * 8 / 10)
                     {
-                        if (player.transform.position != null)
+                        if (player != null)
                         {
                             transform.position = player.transform.position;
                         }
@@ -132,6 +131,12 @@ public class MagicFrame : MonoBehaviour {
                         Destroy(gameObject);
                     }
                     transform.position = newPos;
+                    break;
+                case 5:
+                    if (player != null)
+                    {
+                        transform.position = player.transform.position;
+                    }
                     break;
                 case 6:
                     Vector3 newpos = transform.position;

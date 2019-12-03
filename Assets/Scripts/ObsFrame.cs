@@ -7,6 +7,7 @@ public class ObsFrame : MonoBehaviour {
     public int ObsId;//jenis Obstacle
     public int Life;
     public float Speed,EndWalk;
+    public Main Mainsc;
     public GameObject playerGO;
     public GameObject Bomb;
     //Obstacle 0
@@ -65,7 +66,8 @@ public class ObsFrame : MonoBehaviour {
         }
         if (col.gameObject.tag == "Player")
         {
-            Time.timeScale = 0f;
+            col.gameObject.GetComponent<PlayerScript>().MainSc.GameOver();
+            //Time.timeScale = 0f;
         }
     }
     // Update is called once per frame
