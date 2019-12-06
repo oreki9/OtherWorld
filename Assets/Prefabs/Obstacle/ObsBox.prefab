@@ -103,6 +103,7 @@ MonoBehaviour:
   Life: 0
   Speed: 0
   EndWalk: 0
+  Mainsc: {fileID: 0}
   playerGO: {fileID: 0}
   Bomb: {fileID: 0}
 --- !u!212 &212231822005603378
@@ -140,7 +141,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 47fe374039bc55c4d92658db0609ffc8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5803922, g: 0.6745098, b: 0.7764706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

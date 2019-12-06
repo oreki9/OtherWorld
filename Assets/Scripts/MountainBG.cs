@@ -8,10 +8,11 @@ public class MountainBG : MonoBehaviour
     public GameObject otherMountain;
     public Main Mainscr;
     public Vector3 CameraVec;
+    public float SpeedMountain;
     float AMountWidth;
     void Start()
     {
-        AMountWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x;
+        AMountWidth = transform.GetComponent<ChildMount>().widthM;
         CameraVec = Mainscr.CameraVec;
     }
 
@@ -25,7 +26,7 @@ public class MountainBG : MonoBehaviour
             {
                 newPos.x = otherMountain.transform.position.x + (AMountWidth);
             }
-            transform.position = newPos + (new Vector3(-2f * Time.deltaTime, 0, 0));
+            transform.position = newPos + (new Vector3(-SpeedMountain * Time.deltaTime, 0, 0));
         }
     }
 }

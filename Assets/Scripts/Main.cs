@@ -33,6 +33,10 @@ public class Main : MonoBehaviour
     public Text NameGetMag, GetMagPrice;
     public List<int> MgcPossId;
     public GameObject BtnBuyMgc;
+
+    //Pause panel
+    public GameObject PausePnl;
+    public GameObject PasueBtn;
     void Start()
     {
         MenuSelPanel.SetActive(true);
@@ -71,7 +75,6 @@ public class Main : MonoBehaviour
     {
         string MagicListGet = PlayerPrefs.GetString("Magic", "0");
         MagicListGet += " "+ MgcPossId[GetMagicNow].ToString();
-        Debug.Log(MagicListGet);
         PlayerPrefs.SetString("Magic", MagicListGet);
         int PointBuy = System.Int32.Parse((AllPointTxt.text));
         PlayerPrefs.SetInt("Point", PointBuy - MagicPrice(MgcPossId[GetMagicNow]));
@@ -156,10 +159,26 @@ public class Main : MonoBehaviour
     {
         MenuScene.ToPlayScene();
     }
+    public void ToMenuScene()
+    {
+        MenuScene.ToMenuScene();
+    }
+    public void PauseMenu()
+    {
+        Time.timeScale = 0;
+        PausePnl.SetActive(true);
+    }
+    public void ResumeScene()
+    {
+        Time.timeScale = 1;
+        PausePnl.SetActive(false);
+    }
     public void StartPlay()
     {
         Time.timeScale = 1f;
         MenuSelPanel.SetActive(false);
+        PasueBtn.SetActive(true);
+        transform.GetComponent<AudioSource>().Play();
     }
     // Update is called once per frame
     void Update()
@@ -167,6 +186,10 @@ public class Main : MonoBehaviour
         ScoreText.text = Score.ToString();
         if (Time.timeScale != 0f)
         {
+            if ((ObstacleInArea.Count>1))
+            {
+                transform.GetComponent<AudioSource>().pitch = 1+(((float)ObstacleInArea.Count/2)/10);
+            }
             TimeInst -= 1;
             if (TimeInst <= 0)
             {
@@ -224,6 +247,7 @@ public class Main : MonoBehaviour
     }
     public void GameOver()
     {
+        PasueBtn.SetActive(false);
         Time.timeScale = 0f;
         int GetPoint = PlayerPrefs.GetInt("Point", 0);
         GetPoint = System.Int32.Parse((ScoreText.text)) + GetPoint;

@@ -49,7 +49,7 @@ public class Magic : MonoBehaviour
                 TextBtn.text = "Hoom";
                 break;
             case 4://Messiah
-                MgcoolEnd = 400;
+                MgcoolEnd = 10;
                 TextBtn.text = "Mess";
                 break;
             case 5://At-Field

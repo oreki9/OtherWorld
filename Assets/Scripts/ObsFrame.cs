@@ -19,7 +19,9 @@ public class ObsFrame : MonoBehaviour {
 
     //Obstacle 2
     bool Fly;
-
+    int UpDown = 1;
+    float FarFromMid,JiggleSpd,MidPos;
+    bool SlideFlying = true;
     void Start()
     {
         switch (ObsId)
@@ -30,22 +32,26 @@ public class ObsFrame : MonoBehaviour {
                 break;
             case 1://jumper
                 Life = 100;
-                JumpBoong(0.3, 0);
+                JumpBoong(0.1);
                 Speed = -1;
                 break;
             case 2://flying
                 Life = 100;
                 Speed = -3;
                 Fly = true;
+                SlideFlying = true;
+                MidPos = transform.position.y;
+                JiggleSpd = 0.8f;
+                FarFromMid = 0.4f;
                 break;
         }
         
     }
-    void JumpBoong(double velJump, double TimeJump)
+    void JumpBoong(double velJump)
     {
         JumPhase = true;
         this.velJump = velJump;
-        this.TimeJump = TimeJump;
+        this.TimeJump = 0;
         startY = transform.position.y;
     }
     void OnCollisionEnter2D(Collision2D col)
@@ -67,7 +73,6 @@ public class ObsFrame : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<PlayerScript>().MainSc.GameOver();
-            //Time.timeScale = 0f;
         }
     }
     // Update is called once per frame
@@ -75,6 +80,16 @@ public class ObsFrame : MonoBehaviour {
     {
         if (Time.timeScale != 0f)
         {
+            if (SlideFlying)
+            {
+                Vector3 Newpos = transform.position;
+                Newpos.y += JiggleSpd * Time.deltaTime* (float)UpDown;
+                transform.position = Newpos;
+                if(Mathf.Abs(transform.position.y-MidPos)> FarFromMid)
+                {
+                    UpDown = UpDown *- 1;
+                }
+            }
             if (Life <= 0)
             {
                 Destroy(this.gameObject);
@@ -100,8 +115,8 @@ public class ObsFrame : MonoBehaviour {
                     {
                         newVec.y += (float)(velJump);
                         velJump -= grav * TimeJump;
-                        TimeJump += 0.05;
-                        if (newVec.y - 0.05 < startY)
+                        TimeJump += 0.01;
+                        if (newVec.y - 0.01 < startY)
                         {
                             newVec.y -= (newVec.y - startY);
                         }
@@ -109,7 +124,7 @@ public class ObsFrame : MonoBehaviour {
                     transform.position = (newVec);
                     if (newVec.y == startY)
                     {
-                        JumpBoong(0.3, 0);
+                        JumpBoong(0.1);
                     }
                 }
                 break;
