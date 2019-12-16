@@ -3,6 +3,7 @@ guid: 35bb6c0853c4f904f8c8b0f1adf8572a
 TextureImporter:
   fileIDToRecycleName:
     21300000: Gp114_0
+    21300002: Gp114_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -87,6 +88,20 @@ TextureImporter:
         y: 28
         width: 136
         height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Gp114_1
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 97
+        width: 122
+        height: 103
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

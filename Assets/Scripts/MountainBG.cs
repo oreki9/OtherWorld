@@ -24,7 +24,12 @@ public class MountainBG : MonoBehaviour
             Vector3 newPos = transform.position;
             if (newPos.x <= -CameraVec.x * 2 + (CameraVec.x * 2 - AMountWidth))
             {
+
                 newPos.x = otherMountain.transform.position.x + (AMountWidth);
+                //if (transform.name == "Yama3")
+                //{
+                    //Debug.Log(AMountWidth+" "+otherMountain.transform.position);
+                //}
             }
             transform.position = newPos + (new Vector3(-SpeedMountain * Time.deltaTime, 0, 0));
         }

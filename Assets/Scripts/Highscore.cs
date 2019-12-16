@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class Highscore : MonoBehaviour {
 
     public Text ScoreTxt;
-    ButtonSc BtnScript;
+    public ButtonSc BtnScript;
+    public GameObject LoadingPnl;
     void Start()
     {
-        BtnScript = new ButtonSc();
         LoadScore();
     }
     public void LoadScore()
@@ -30,6 +30,17 @@ public class Highscore : MonoBehaviour {
     }
     public void BtnPlaySc()
     {
+        LoadingPnl.SetActive(true);
         BtnScript.ToPlayScene();
+    }
+    public void BtnCredits()
+    {
+        LoadingPnl.SetActive(true);
+        BtnScript.ToCreditScene();
+    }
+    public void BtnSetting()
+    {
+        LoadingPnl.SetActive(true);
+        BtnScript.ToSetingScene();
     }
 }

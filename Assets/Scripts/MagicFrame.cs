@@ -39,8 +39,8 @@ public class MagicFrame : MonoBehaviour {
                 TimeLast = 10;
                 break;
             case 5://At-Field
-                pow = 8;
-                TimeLast = 400;
+                pow = 100000;//8;
+                TimeLast = 100000;//400;
                 break;
             case 6://Rain
                 pow = 1;
@@ -48,7 +48,8 @@ public class MagicFrame : MonoBehaviour {
                 speed = 5;
                 break;
             case 7://Fly
-                TimeLast = 150;
+                TimeLast = 200;
+                pow = 1;
                 break;
             default:
                 TimeLast = 100;
@@ -74,14 +75,6 @@ public class MagicFrame : MonoBehaviour {
         if (Time.timeScale != 0)
         {
             TimeLast -= 1;
-            /*switch (MagId)
-            {
-                case 5:
-                    break;
-                default:
-                    
-                    break;
-            }*/
             if (TimeLast <= 0)
             {
                 Destroy(gameObject);
@@ -142,6 +135,9 @@ public class MagicFrame : MonoBehaviour {
                     Vector3 newpos = transform.position;
                     newpos = newpos - transform.up * ((float)speed / 10);
                     transform.position = newpos;
+                    break;
+                case 7:
+                    transform.position = player.transform.position;
                     break;
             }
         }

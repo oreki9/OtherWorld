@@ -37,7 +37,7 @@ public class Magic : MonoBehaviour
                 TextBtn.text = "Pow";
                 break;
             case 1://Blaster
-                MgcoolEnd = 100;
+                MgcoolEnd = 200;
                 TextBtn.text = "Blast";
                 break;
             case 2://Freeze
@@ -49,7 +49,7 @@ public class Magic : MonoBehaviour
                 TextBtn.text = "Hoom";
                 break;
             case 4://Messiah
-                MgcoolEnd = 10;
+                MgcoolEnd = 400;
                 TextBtn.text = "Mess";
                 break;
             case 5://At-Field
@@ -116,7 +116,7 @@ public class Magic : MonoBehaviour
                 if (ManyObj == 1)
                 {
                     magic = Instantiate(mainScr.MgcList[MgcId], PlayerVec, Quaternion.identity);
-                    if ((MgcId == 1)||(MgcId==5))
+                    if ((MgcId == 1)||(MgcId==5)||(MgcId==7))
                     {
                         magic.GetComponent<MagicFrame>().player = PlayerObj;
                     }

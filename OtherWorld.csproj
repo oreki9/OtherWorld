@@ -194,9 +194,6 @@
     <Reference Include="UnityEngine.WindModule">
       <HintPath>C:/Program Files/Unity20174/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity20174/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -253,7 +250,9 @@
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshInstance.cs" />
     <Compile Include="Assets\Scripts\ButtonSc.cs" />
     <Compile Include="Assets\Scripts\ChildMount.cs" />
+    <Compile Include="Assets\Scripts\creditsSC.cs" />
     <Compile Include="Assets\Scripts\Highscore.cs" />
+    <Compile Include="Assets\Scripts\LoadingScene.cs" />
     <Compile Include="Assets\Scripts\Magic.cs" />
     <Compile Include="Assets\Scripts\MagicFrame.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
@@ -261,6 +260,9 @@
     <Compile Include="Assets\Scripts\ObsFrame.cs" />
     <Compile Include="Assets\Scripts\OtherBomb\Bomb.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\UIScript\BtnVolume.cs" />
+    <Compile Include="Assets\Scripts\UIScript\DialogSC.cs" />
+    <Compile Include="Assets\Scripts\UIScript\SettingSC.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Anima2D\Licenses.txt" />
