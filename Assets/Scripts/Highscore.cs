@@ -26,6 +26,8 @@ public class Highscore : MonoBehaviour {
     public void ResetHScore()
     {
         PlayerPrefs.SetInt("Score", 0);
+        PlayerPrefs.SetString("Magic", "0 7");
+        PlayerPrefs.SetInt("Point", 0);
         LoadScore();
     }
     public void BtnPlaySc()

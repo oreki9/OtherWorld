@@ -19,6 +19,7 @@ public class Magic : MonoBehaviour
     public GameObject AtField;//shield
     bool MoveFly = false;
     public Vector3 endFly;
+    public GameObject MessiahSlash;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,11 +90,11 @@ public class Magic : MonoBehaviour
                 {
                     for (int i = 0; i < mainScr.ObstacleInArea.Count; i++)
                     {
-                        Destroy(mainScr.ObstacleInArea[i]);
+                        mainScr.ObstacleInArea[i].GetComponent<ObsFrame>().ObstDie();
                     }
                     PlayerVec = new Vector3(0, 0);
                     Mgcooldown = 0;
-
+                    MessiahSlash.SetActive(true);
                 }
                 GameObject magic = null;
                 if (MgcId == 6)
@@ -111,7 +112,12 @@ public class Magic : MonoBehaviour
                 }
                 if(MgcId == 2)
                 {
-                    PlayerVec = new Vector3(0, 0);
+                    PlayerVec = new Vector3(0, 0,-8);
+                }
+                if (MgcId == 5)
+                {
+                    AtField = magic;
+                    PlayerVec.z = -1;
                 }
                 if (ManyObj == 1)
                 {
@@ -120,10 +126,6 @@ public class Magic : MonoBehaviour
                     {
                         magic.GetComponent<MagicFrame>().player = PlayerObj;
                     }
-                }
-                if (MgcId == 5)
-                {
-                    AtField = magic;
                 }
                 GameObject TargetPos = null;
                 float jarakTarget = 0;

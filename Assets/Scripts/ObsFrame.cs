@@ -10,6 +10,7 @@ public class ObsFrame : MonoBehaviour {
     public Main Mainsc;
     public GameObject playerGO;
     public GameObject Bomb;
+    public Texture2D texture;
     //Obstacle 0
 
     //Obstacle 1
@@ -63,6 +64,11 @@ public class ObsFrame : MonoBehaviour {
             {
                 case 2:
                     Speed = Speed/ 2;
+                    Color color;
+                    if (ColorUtility.TryParseHtmlString("#5CBEFFFF", out color))
+                    {
+                        GetComponent<SpriteRenderer>().color = color;
+                    }
                     break;
                 default:
                     Life -= 50 * pow;
@@ -74,6 +80,58 @@ public class ObsFrame : MonoBehaviour {
         {
             col.gameObject.GetComponent<PlayerScript>().MainSc.GameOver();
         }
+    }
+    public void ObstDie()
+    {
+        DustDie(texture);
+    }
+    void DustDie(Texture2D texture)
+    {
+        Vector3 ThisScale = transform.localScale;
+        Color[] pix;
+        int width, height;
+        width = texture.width / 5;
+        height = texture.height / 5;
+        GameObject ParentGOEffect = new GameObject();
+        EffectSelect EffectParent;
+        EffectParent = ParentGOEffect.AddComponent<EffectSelect>();
+        EffectParent.Mode = 0;
+        EffectParent.EndTime = 5;
+
+        for (int i = 0; i < 5; i++)
+        {
+            for (int o = 0; o < 5; o++)
+            {
+                if (i * width > texture.width)
+                {
+                    width = texture.width - ((i - 1) * width);
+                }
+                if (i * height > texture.height)
+                {
+                    height = texture.height - ((o - 1) * height);
+                }
+                GameObject newGO = new GameObject();
+                Color color;
+                newGO.AddComponent<SpriteRenderer>();
+                newGO.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+                newGO.transform.SetParent(ParentGOEffect.transform);
+                newGO.transform.position = transform.position;
+                EffectSelect thisSc = newGO.AddComponent<EffectSelect>();
+                thisSc.speed = Random.Range(0.1f, 0.6f);
+                thisSc.Mode = 1;
+                thisSc.EndTime = 5;
+                Texture2D texture2 = new Texture2D(width, height);
+                Sprite shit = Sprite.Create(texture2, new Rect(0, 0, texture2.width, texture2.height), new Vector2(0.5f, 0.5f), 100);
+                pix = texture.GetPixels(i * width, o * height, width, height);
+                texture2.SetPixels(pix);
+                if (transform.GetComponent<SpriteRenderer>())
+                {
+                    newGO.transform.GetComponent<SpriteRenderer>().sprite = shit;
+                }
+                texture2.Apply();
+            }
+        }
+        Destroy(gameObject);
     }
     // Update is called once per frame
     void Update()
@@ -92,7 +150,7 @@ public class ObsFrame : MonoBehaviour {
             }
             if (Life <= 0)
             {
-                Destroy(this.gameObject);
+                DustDie(texture);
             }
             if(transform.position.x < EndWalk)
             {

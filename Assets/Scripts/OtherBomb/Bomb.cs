@@ -16,6 +16,10 @@ public class Bomb : MonoBehaviour {
         {
             col.gameObject.GetComponent<PlayerScript>().MainSc.GameOver();
         }
+        if (col.gameObject.tag == "Magic")
+        {
+            Destroy(gameObject);
+        }
     }
         // Update is called once per frame
     void Update () {

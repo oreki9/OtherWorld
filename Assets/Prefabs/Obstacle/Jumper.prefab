@@ -101,7 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObsId: 1
   Life: 0
-  TimeWatch: 0
+  Speed: 0
+  EndWalk: 0
+  Mainsc: {fileID: 0}
+  playerGO: {fileID: 0}
+  Bomb: {fileID: 0}
+  texture: {fileID: 2800000, guid: fdc0b7a3e3689814284c7a442a433831, type: 3}
 --- !u!212 &212982666649347474
 SpriteRenderer:
   m_ObjectHideFlags: 1

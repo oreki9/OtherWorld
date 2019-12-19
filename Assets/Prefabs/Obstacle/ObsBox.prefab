@@ -106,6 +106,7 @@ MonoBehaviour:
   Mainsc: {fileID: 0}
   playerGO: {fileID: 0}
   Bomb: {fileID: 0}
+  texture: {fileID: 2800000, guid: 47fe374039bc55c4d92658db0609ffc8, type: 3}
 --- !u!212 &212231822005603378
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -39,8 +39,8 @@ public class MagicFrame : MonoBehaviour {
                 TimeLast = 10;
                 break;
             case 5://At-Field
-                pow = 100000;//8;
-                TimeLast = 100000;//400;
+                pow = 8;
+                TimeLast = 400;
                 break;
             case 6://Rain
                 pow = 1;
@@ -94,9 +94,11 @@ public class MagicFrame : MonoBehaviour {
                     {
                         if (player != null)
                         {
-                            transform.position = player.transform.position;
+                            Vector3 NewPos = player.transform.position;
+                            NewPos.z = -0.1f;
+                            transform.position = NewPos;
                         }
-                        transform.localScale += new Vector3(2, 1.5f, 0) * Time.deltaTime;
+                        transform.localScale += new Vector3(2, 2f, 0) * Time.deltaTime;
                         transform.Rotate(new Vector3(0, 0, 250) * Time.deltaTime);
                     }
                     else
@@ -128,7 +130,8 @@ public class MagicFrame : MonoBehaviour {
                 case 5:
                     if (player != null)
                     {
-                        transform.position = player.transform.position;
+                        Vector3 NewPos = player.transform.position;
+                        transform.position = new Vector3(NewPos.x, NewPos.y,transform.position.z);
                     }
                     break;
                 case 6:

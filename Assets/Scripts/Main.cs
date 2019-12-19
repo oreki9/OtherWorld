@@ -40,7 +40,8 @@ public class Main : MonoBehaviour
     int GetMagicNow = 0;
     public Text NameGetMag, GetMagPrice;
     public List<int> MgcPossId;
-    public GameObject BtnPref,BtnBuyMgc, BtnNext;
+    public GameObject BtnPref,BtnBuyMgc, BtnNext,DescTextPnl;
+    public Text DescMgcNewPnl;
 
     //Pause panel
     public GameObject PausePnl;
@@ -53,7 +54,7 @@ public class Main : MonoBehaviour
         MenuSelPanel.SetActive(true);
         MagIdSel = GetEveryMagicPossible();
         SelMagNow = 0;
-        SetDescriptText(SelMagNow);
+        SetDescriptText(DescriptMgc, MagIdSel[SelMagNow]);
         SelMagText.text = GetMagicName(SelMagNow);
         transform.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Volume", 0);//set music
         Time.timeScale = 0f;
@@ -92,8 +93,25 @@ public class Main : MonoBehaviour
             MagicListGet += " " + MgcPossId[GetMagicNow].ToString();
             PlayerPrefs.SetString("Magic", MagicListGet);
             int PointBuy = System.Int32.Parse((AllPointTxt.text));
-            PlayerPrefs.SetInt("Point", PointBuy - MagicPrice(MgcPossId[GetMagicNow]));
-            MenuScene.ToMenuScene();
+            int pointNow = PointBuy - MagicPrice(MgcPossId[GetMagicNow]);
+            PlayerPrefs.SetInt("Point", pointNow);
+            MgcPossId.RemoveAt(GetMagicNow);
+            if (MgcPossId.Count != GetMagicNow)
+            {
+                GetMagNext();
+            }
+            else if (GetMagicNow != 0)
+            {
+                GetMagPref();
+            }
+            else
+            {
+                BtnBuyMgc.SetActive(false);
+                BtnNext.SetActive(false);
+                BtnPref.SetActive(false);
+                DescTextPnl.SetActive(false);
+            }
+            AllPointTxt.text = pointNow.ToString();
         }
     }
     public void GetMagNext()
@@ -110,6 +128,7 @@ public class Main : MonoBehaviour
         {
             GetMagPrice.text = MagicPrice(MgcPossId[GetMagicNow]).ToString();
         }
+        SetDescriptText(DescMgcNewPnl, MgcPossId[GetMagicNow]);
         IsCanBuy();
     }
     public void GetMagPref()
@@ -126,6 +145,7 @@ public class Main : MonoBehaviour
         {
             GetMagPrice.text = MagicPrice(MgcPossId[GetMagicNow]).ToString();
         }
+        SetDescriptText(DescMgcNewPnl, MgcPossId[GetMagicNow]);
         IsCanBuy();
     }
     public void SelMagNext()
@@ -137,7 +157,7 @@ public class Main : MonoBehaviour
         if (SelMagText!=null)
         {
             SelMagText.text = GetMagicName(SelMagNow);
-            SetDescriptText(SelMagNow);
+            SetDescriptText(DescriptMgc, MagIdSel[SelMagNow]);
         }
     }
     public void SelMagPref()
@@ -149,7 +169,7 @@ public class Main : MonoBehaviour
         if (SelMagText != null)
         {
             SelMagText.text =  GetMagicName(SelMagNow);
-            SetDescriptText(SelMagNow);
+            SetDescriptText(DescriptMgc, MagIdSel[SelMagNow]);
         }
     }
     public void SelMag()
@@ -157,6 +177,7 @@ public class Main : MonoBehaviour
         if (SelMagBtn + 1 <= MagicBtnList.Count)
         {
             PlayBtnSel.SetActive(true);
+            MagicBtnList[SelMagBtn].SetActive(true);
             MagicBtnList[SelMagBtn].GetComponent<Magic>().SetBtnMgcId(MagIdSel[SelMagNow]);
             MagIdSel.RemoveAt(SelMagNow);
             SelMagBtn +=1;
@@ -167,7 +188,7 @@ public class Main : MonoBehaviour
             if (MagIdSel.Count > 0)
             {
                 SelMagText.text = GetMagicName(SelMagNow);//MgcList[MagIdSel[SelMagNow]].name;
-                SetDescriptText(SelMagNow);
+                SetDescriptText(DescriptMgc, MagIdSel[SelMagNow]);
             }
             if (MagIdSel.Count == 0)
             {
@@ -231,7 +252,7 @@ public class Main : MonoBehaviour
                 ObsFrame ObsScript = Obstacle.GetComponent<ObsFrame>();
                 ObsScript.EndWalk = -(CameraVec.x + transform.position.x+1f);
                 ObsScript.playerGO = playerGO;
-                TimeInst = 50+(Random.Range(0,10)*10);
+                TimeInst = 10+(Random.Range(0,10)*10);
             }
         }
     }
@@ -280,9 +301,9 @@ public class Main : MonoBehaviour
         name = "Add " + name;
         return name;
     }
-    void SetDescriptText(int i)
+    void SetDescriptText(Text Desc,int i)
     {
-        DescriptMgc.text = descriptionMgc[MagIdSel[i]];
+        Desc.text = descriptionMgc[i];
     }
     public void GameOver()
     {
@@ -290,14 +311,19 @@ public class Main : MonoBehaviour
         Time.timeScale = 0f;
         if ((GetMagicNow >= MgcPossId.Count) && (MgcPossId.Count == 0))
         {
-            BtnBuyMgc.GetComponent<Button>().interactable = false;
-            BtnNext.GetComponent<Button>().interactable = false;
-            BtnPref.GetComponent<Button>().interactable = false;
+            BtnBuyMgc.SetActive(false);
+            BtnNext.SetActive(false);
+            BtnPref.SetActive(false);
+            DescTextPnl.SetActive(false);
         }
         int GetPoint = PlayerPrefs.GetInt("Point", 0);
         GetPoint = System.Int32.Parse((ScoreText.text)) + GetPoint;
         PlayerPrefs.SetInt("Point", GetPoint);
         GetMagicPanel.SetActive(true);
+        if (MgcPossId.Count != 0)
+        {
+            SetDescriptText(DescMgcNewPnl, MgcPossId[GetMagicNow]);
+        }
         if (NameGetMag != null)
         {
             if (MgcPossId.Count > 0)

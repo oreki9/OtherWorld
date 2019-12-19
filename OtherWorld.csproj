@@ -251,6 +251,7 @@
     <Compile Include="Assets\Scripts\ButtonSc.cs" />
     <Compile Include="Assets\Scripts\ChildMount.cs" />
     <Compile Include="Assets\Scripts\creditsSC.cs" />
+    <Compile Include="Assets\Scripts\EffectSelect.cs" />
     <Compile Include="Assets\Scripts\Highscore.cs" />
     <Compile Include="Assets\Scripts\LoadingScene.cs" />
     <Compile Include="Assets\Scripts\Magic.cs" />
